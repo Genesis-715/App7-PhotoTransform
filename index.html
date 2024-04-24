@@ -102,6 +102,7 @@
 	//
 	const imgData = context.getImageData(0, 0, 600, 500);
 
+	//The following script is intended to assign the necessary values for the RGB components of an image.
           for (let i = 0; i < imgData.data.length; i += 4) { 
 		let red = imgData.data[i]; //variable for red
 		let green = imgData.data[i + 1]; //variable for green
@@ -111,10 +112,12 @@
 		imgData.data[i + 1] = 0 - green;  //remove all green  
 		imgData.data[i + 2] = 255 - blue; //keep all blue
 	}   
-
+	
+	// Place the image containing solely blue pixels back onto the 2nd canvas
+	context2.putImageData(imgData, 0, 0);
+	
+	} // end of img.onload
           
-          
-        } // end of img.onload
         
         img.src = reader.result;
       } //  end of reader.onload
