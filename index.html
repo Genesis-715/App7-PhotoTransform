@@ -37,6 +37,7 @@
   <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 
+<!-- JavaScript -->
  <script>
   var docMod = document.lastModified; // gets last modified date and time of the index.html file
   console.log("This file last modified  " + docMod); // displays last modified date and time in the javascipt browser console 
@@ -67,15 +68,18 @@
   var ratio = (py / ih);
   return (ratio===0)?1:ratio;
  }
-
+// Function to handle image drawing on IOS devices
  function drawImageIOSFix(ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
   var vertSquashRatio = detectVerticalSquash(img);
   ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
  }
 
+// Event listener for window onload
 /* window.onload necessary to keep javascripts from running before the app gets a chance to load entirely. */
  window.onload = function() {
+//Get the file input element
   var fileInput = document.getElementById('fileInput');
+//Get the message display area
   var messageDisplayArea = document.getElementById('messageDisplayArea');
   /* fileInput.addEventListener looks for any change in the <input> tag indicating that the user has selected a file (picture). */
   fileInput.addEventListener('change', function(e) {
@@ -138,13 +142,15 @@
     <div data-role="header">
     <h1>Primary Colors</h1></div><!-- /header -->
     <div data-role="content">	
+	<! -- Content section -->
       <h2>Push button to take picture.</h2>
       <div>
         Press orange button to create or choose image file:
         <input type="file" id="fileInput" STYLE="background-color: #FF6600;">
       </div>
+	<!-- Message display area -->
       <div id="messageDisplayArea"></div>
-      
+        <!-- First canvas for displaying original image -->
 	<canvas id="myCanvas" width=600 height=500 style="border:1px solid #d3d3d3;"></canvas>
 
 	<script> /* This script initiates the cavas and puts the text on the canvas "myCanvas" */
@@ -154,7 +160,7 @@
         	context.fillStyle = "black";
         	context.fillText("Original image will go here", 10, 20);
       </script>
-
+	<!-- Second canvas for displaying image with blue intensities -->
 	<canvas id="myCanvas2" width=600 height=500 style="border:1px solid #d3d3d3;"></canvas> <!--Create the second canvas with the same size and style as the first one-->
 
 	<script> //This script innitiates, formats, and puts the text on the canvas "myCanvas2"
