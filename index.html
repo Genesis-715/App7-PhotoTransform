@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<!-- The following code has been developed by students and/or researchers of the Freshman Research Initiative, DIY Diagnostics Stream at The University of Texas at Austin.  This code is shared for demonstration purposes and should not be considered a product -- it is for entertainment purposes only.  Any user of this code does so at their own risk. Members of the DIY Stream, FRI, and The University of Texas system are not liable for anything related to this code.
+
+<!-- The following code has been developed by students and/or researchers of the Freshman Research Initiative, DIY Diagnostics Stream at The University of Texas at Austin.  This code is shared for demonstration purposes and should not be considered a product -- it is for entertainment purposes only. Any user of this code does so at their own risk. Members of the DIY Stream, FRI, and The University of Texas system are not liable for anything related to this code.
  
   THIS CODE SHOULD NOT BE USED TO DIAGNOSE ANY KIND OF MEDICAL CONDITION.
  
@@ -24,8 +23,7 @@
   http://stackoverflow.com/questions/11929099/html5-canvas-drawimage-ratio-bug-ios
   
   Brief Description of Goal of Code:
-  Develop an app enabling users to capture or upload a photo upon pressing a button, then showcase it on one canvas. Simultaneously, on a second    canvas, the image will be rendered with solely blue hues.
- 
+  Create an app that allows user to take a picture or upload one when pushing a button then display the picture on a canvas. At the same time, on the second canvas, the picture will be displayed with only blue intensities.
   Known Issues:
   None
 -->
@@ -99,25 +97,25 @@
 
           /*  +++++++++++++++ BEGIN IMAGE PROCESSING +++++++++++++++ */
           /*  ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-	//
-	const imgData = context.getImageData(0, 0, 600, 500);
-
-	//The following script is intended to assign the necessary values for the RGB components of an image.
-          for (let i = 0; i < imgData.data.length; i += 4) { 
+	//Let the following script to retrieve image data from user's upload on 1st canvas
+	const imgData = context.getImageData(0, 0, 600, 500); //Get RGB data from image upload from 1st canvas
+	
+	//I was I able to change the image's pixel intensities with code from https://javascript.plainenglish.io/how-to-change-image-hue-with-html5-canvas-in-javascript-514f0e8226a0
+	//The following script is to apply required values for RGB components of image
+	for (let i = 0; i < imgData.data.length; i += 4) { 
 		let red = imgData.data[i]; //variable for red
 		let green = imgData.data[i + 1]; //variable for green
-		let blue = imgData.data [i + 2]; //variable for blue
-          
-          	imgData.data[i] = 0 - red; //remove all red
+		let blue = imgData.data [i + 2]; //variable for blue   
+
+		imgData.data[i] = 0 - red; //remove all red
 		imgData.data[i + 1] = 0 - green;  //remove all green  
 		imgData.data[i + 2] = 255 - blue; //keep all blue
 	}   
 	
-	// Place the image containing solely blue pixels back onto the 2nd canvas
-	context2.putImageData(imgData, 0, 0);
-	
-	} // end of img.onload
+	//Put image with only blue pixels back to 2nd canvas
+	context2.putImageData(imgData, 0, 0);  
           
+        } // end of img.onload
         
         img.src = reader.result;
       } //  end of reader.onload
@@ -132,12 +130,48 @@
   }); // end of the fileInput.addEventListener function
  } // end of the window.onload function
  </script>
+
  </head>
 
  <body>
   <div data-role="page">
     <div data-role="header">
     <h1>Primary Colors</h1></div><!-- /header -->
+    <div data-role="content">	
+      <h2>Push button to take picture.</h2>
+      <div>
+        Press orange button to create or choose image file:
+        <input type="file" id="fileInput" STYLE="background-color: #FF6600;">
+      </div>
+      <div id="messageDisplayArea"></div>
+      
+	<canvas id="myCanvas" width=600 height=500 style="border:1px solid #d3d3d3;"></canvas>
+
+	<script> /* This script initiates the cavas and puts the text on the canvas "myCanvas" */
+        	var canvas = document.getElementById('myCanvas');
+        	var context = canvas.getContext("2d");
+        	context.font = '20pt Calibri';
+        	context.fillStyle = "black";
+        	context.fillText("Original image will go here", 10, 20);
+      </script>
+
+	<canvas id="myCanvas2" width=600 height=500 style="border:1px solid #d3d3d3;"></canvas> <!--Create the second canvas with the same size and style as the first one-->
+
+	<script> //This script innitiates, formats, and puts the text on the canvas "myCanvas2"
+		var canvas2 = document.getElementById("myCanvas2"); //to find the <canvas> element in the DOM
+		var context2 = canvas2.getContext("2d"); //Pass the string 2d to the second canvas
+		context2.font = "20pt Calibri"; //Set font and size for text
+		context2.fillStyle = "black";
+		context2.fillText("Image with blue intensities only will be here", 10, 20); //Add text on the canvas with its position
+	</script>
+
+    </div><!-- /content -->
+    <div data-role="footer" data-position="fixed">
+      <p>DIY Diagnostics</p>
+    </div><!-- /footer -->
+  </div><!-- /page -->
+ </body>
+</html> Colors</h1></div><!-- /header -->
     <div data-role="content">	
       <h2>Push button to take picture.</h2>
       <div>
